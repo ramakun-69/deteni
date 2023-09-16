@@ -175,7 +175,7 @@ elseif ($_GET['form'] == 'edit') {
       <div class="col-md-12">
         <div class="box box-primary">
           <!-- form start -->
-          <form role="form" class="form-horizontal" action="modules/data-deteni/proses.php?act=update" method="POST">
+          <form role="form" class="form-horizontal" enctype="multipart/form-data" action="modules/data-deteni/proses.php?act=update" method="POST">
             <div class="box-body">
 
               <div class="form-group">
@@ -210,6 +210,12 @@ elseif ($_GET['form'] == 'edit') {
                 <label class="col-sm-2 control-label">Asal Pengiriman</label>
                 <div class="col-sm-5">
                   <input type="text" class="form-control" name="asal" autocomplete="off" value="<?php echo $data['asal']; ?>" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Foto</label>
+                <div class="col-sm-5">
+                  <input type="file" class="form-control" name="foto" autocomplete="off" value="<?php echo $data['asal']; ?>" required>
                 </div>
               </div>
 

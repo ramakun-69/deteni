@@ -15,10 +15,13 @@ if ($_SESSION['hak_akses'] == 'Super Admin') { ?>
   <!-- sidebar menu start -->
   <ul class="sidebar-menu">
     <li class="header">MAIN MENU</li>
-
+    <li>
+        <a href="index.php"><i class="fa fa-backward"></i>Kembali Ke Halaman Utama </a>
+      </li>
     <?php
     // fungsi untuk pengecekan menu aktif
     // jika menu beranda dipilih, menu beranda aktif
+    
     if ($_GET["module"] == "beranda") { ?>
       <li class="active">
         <a href="?module=beranda"><i class="fa fa-home"></i> Beranda </a>
@@ -30,6 +33,7 @@ if ($_SESSION['hak_akses'] == 'Super Admin') { ?>
       <li>
         <a href="?module=beranda"><i class="fa fa-home"></i> Beranda </a>
       </li>
+      
     <?php
     }
 
@@ -449,9 +453,11 @@ if ($_SESSION['hak_akses'] == 'Staff') { ?>
         <a href="?module=password"><i class="fa fa-lock"></i> Ubah Password</a>
       </li>
     <?php
-    }
+    } 
     ?>
+     
   </ul>
+  
   <!--sidebar menu end-->
 <?php
 }

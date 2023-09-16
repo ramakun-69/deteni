@@ -87,21 +87,59 @@ else {
                 $wn         = mysqli_real_escape_string($mysqli, trim($_POST['wn']));
 
                 $updated_user = $_SESSION['id_user'];
-
-                // perintah query untuk mengubah data pada tabel obat
+                $upload_dir = '../../images/deteni/';
+            $foto_filename = $_FILES['foto']['name'];
+            $foto_tmpname = $_FILES['foto']['tmp_name'];
+            if (!empty($foto_filename)) {
+                // Cek tipe gambar yang diizinkan (misalnya, hanya gambar JPEG yang diperbolehkan)
+                $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+                $extension = pathinfo($foto_filename, PATHINFO_EXTENSION);
+    
+                if (in_array(strtolower($extension), $allowed_extensions)) {
+                    // Buat nama unik untuk gambar
+                    $foto_name = uniqid('foto_') . '.' . $extension;
+                    // Pindahkan gambar ke direktori tujuan
+                    if (move_uploaded_file($foto_tmpname, $upload_dir . $foto_name)) {
+                       // perintah query untuk mengubah data pada tabel obat
                 $query = mysqli_query($mysqli, "UPDATE is_deteni SET  nama_deteni     = '$nama_deteni',
-                                                                    blok_deteni     = '$blok_deteni',
-                                                                    asal            = '$asal',
-                                                                    wn              = '$wn',
-                                                                    updated_user    = '$updated_user'
-                                                              WHERE kode_deteni       = '$kode_deteni'")
-                    or die('Ada kesalahan pada query update : ' . mysqli_error($mysqli));
+                blok_deteni     = '$blok_deteni',
+                asal            = '$asal',
+                wn              = '$wn',
+                foto            = '$foto_name',
+                updated_user    = '$updated_user'
+                        WHERE kode_deteni       = '$kode_deteni'")
+                or die('Ada kesalahan pada query update : ' . mysqli_error($mysqli));
 
                 // cek query
                 if ($query) {
-                    // jika berhasil tampilkan pesan berhasil update data
-                    header("location: ../../main.php?module=data_deteni&alert=2");
+                // jika berhasil tampilkan pesan berhasil update data
+                header("location: ../../main.php?module=data_deteni&alert=2");
                 }
+                    } else {
+                        // Kesalahan saat mengunggah gambar
+                        echo "Error: Gambar gagal diunggah.";
+                    }
+                } else {
+                    // Tipe gambar tidak diizinkan
+                    echo "Error: Tipe gambar tidak diizinkan.";
+                }
+
+            } else{
+                $query = mysqli_query($mysqli, "UPDATE is_deteni SET  nama_deteni     = '$nama_deteni',
+                blok_deteni     = '$blok_deteni',
+                asal            = '$asal',
+                wn              = '$wn',
+                updated_user    = '$updated_user'
+                        WHERE kode_deteni       = '$kode_deteni'")
+                or die('Ada kesalahan pada query update : ' . mysqli_error($mysqli));
+
+                // cek query
+                if ($query) {
+                // jika berhasil tampilkan pesan berhasil update data
+                header("location: ../../main.php?module=data_deteni&alert=2");
+                }
+            }
+               
             }
         }
     } elseif ($_GET['act'] == 'delete') {
